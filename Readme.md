@@ -1,4 +1,3 @@
-
 PicoGPU: A Synthesizable 2D Graphics Engine
 Platformed on Xilinx Artix-7 and developed using Xilinx Vivado Design Suite.
 
@@ -7,6 +6,15 @@ This project presents a hardware-based 2D graphics engine implemented in the Ver
 
 Design Philosophy
 An iterative, register-based architecture was selected to balance resource efficiency with real-time performance. By implementing a Wishbone Slave interface, the GPU can be integrated into any SoC (System-on-Chip) as a memory-mapped peripheral. The design separates high-speed pixel timing from low-speed bus command processing to ensure timing closure on FPGA fabric.
+
+Code snippet
+graph TD;
+    A[Wishbone Bus] --> B[Command Processor];
+    B --> C[Internal Registers];
+    C --> D[GPU Renderer];
+    E[VGA Timing Core] --> D;
+    D --> F[VGA Output];
+Figure 1: High-level architectural flow of the PicoGPU IP core.
 
 2. System Architecture and Interfaces
 The PicoGPU employs a modular, hierarchical design to manage real-time video generation:
@@ -39,10 +47,11 @@ System Simulation: The tb_pico_gpu_top.v testbench simulated a CPU sending diago
 
 Visual Verification: Simulation output was converted into a GIF demo to confirm the real-time movement and color-switching capabilities of the hardware.
 
-5. Demo ![PicoGPU Animation](animation.gif)
+5. Demo
 Simulation Output: The GPU processing Wishbone commands to move a box diagonally while cycling through Red, Green, and Blue color channels.
+ ![PicoGPU Animation](animation.gif)
 
-6. Synthesis and Implementation Results
+7. Synthesis and Implementation Results
 The design was synthesized for the Artix-7 platform using the Vivado Design Suite.
 
 Target Device: Xilinx Artix-7 (AC701 Evaluation Platform).
@@ -52,6 +61,3 @@ Resolution: 640x480 @ 60Hz.
 Pixel Clock: 25.175 MHz.
 
 Resource Utilization: Iterative design optimized for low LUT and Flip-Flop count.
-
-
-
